@@ -48,14 +48,14 @@ Returns all active health advisory Service Health events across all subscription
 ```kusto
 ServiceHealthResources
 | where type =~ 'Microsoft.ResourceHealth/events'
-| extend eventType = properties.EventType, status = properties.Status, description = properties.Title, trackingId = properties.TrackingId, summary = properties.Summary, priority = properties.Priority, impactStartTime = properties.ImpactStartTime, impactMitigationTime = todatetime(tolong(properties.ImpactMitigationTime))
+| extend eventType = properties.EventType, status = properties.Status, description = properties.Title, trackingId = properties.TrackingId, summary = properties.Summary, priority = properties.Priority, impactStartTime = todatetime(tolong(properties.impactStartTime)), impactMitigationTime = todatetime(tolong(properties.ImpactMitigationTime))
 | where eventType == 'HealthAdvisory' and impactMitigationTime > now()
 ```
 
 # [Azure CLI](#tab/azure-cli)
 
 ```azurecli-interactive
-az graph query -q "ServiceHealthResources | where type =~ 'Microsoft.ResourceHealth/events' | extend eventType = properties.EventType, status = properties.Status, description = properties.Title, trackingId = properties.TrackingId, summary = properties.Summary, priority = properties.Priority, impactStartTime = properties.ImpactStartTime, impactMitigationTime = todatetime(tolong(properties.ImpactMitigationTime)) | where eventType == 'HealthAdvisory' and impactMitigationTime > now()"
+az graph query -q "ServiceHealthResources | where type =~ 'Microsoft.ResourceHealth/events' | extend eventType = properties.EventType, status = properties.Status, description = properties.Title, trackingId = properties.TrackingId, summary = properties.Summary, priority = properties.Priority, impactStartTime = todatetime(tolong(properties.impactStartTime)), impactMitigationTime = todatetime(tolong(properties.ImpactMitigationTime)) | where eventType == 'HealthAdvisory' and impactMitigationTime > now()"
 ```
 
 # [Azure PowerShell](#tab/azure-powershell)
